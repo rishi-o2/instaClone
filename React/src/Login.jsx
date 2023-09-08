@@ -1,11 +1,13 @@
-import react, { useState } from "react";
+import react, { useState, useContext } from "react";
 import reactdom from "react-dom";
 import { NavLink } from "react-router-dom";
 import "./index.css";
 import M from "materialize-css";
 import { useNavigate } from 'react-router-dom'; 
+import {UserContext} from './App';
 
  const Login = ()=>{
+    const {state,dispatch} = useContext(UserContext)
     const navigate = useNavigate()
     const [email,useemail] = useState("")
     const [password,usepassword] = useState("")
@@ -30,8 +32,13 @@ import { useNavigate } from 'react-router-dom';
         M.toast({html:data.error,classes:"#e53935 red darken-1"})
         }
         else{
+            //console.log(data);
+            localStorage.setItem("jwt",data.token)
+            localStorage.setItem("user",JSON.stringify(data.user))
+            dispatch({type:"USER",payload:data.user})
+            //console.log(localStorage.getItem("jwt"))
             M.toast({html:"successfull login",classes:"#4caf50 green"})
-            navigate("/")
+            navigate("/Profile")
         }
     }).catch(e=>{
         console.log(e)

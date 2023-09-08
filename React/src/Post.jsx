@@ -19,7 +19,7 @@ const Post = ()=>{
             method:"post",
             headers:{
                  "Content-Type":"application/json",
-                "Authorization":"Bearer "+ localStorage.getItem("token")
+                "Authorization":"Bearer "+ localStorage.getItem("jwt")
             },
             body:JSON.stringify({
                 title,
@@ -28,14 +28,17 @@ const Post = ()=>{
             })
         }).then(res=>res.json())
         .then(data=>{
+          
     
            if(data.error){
-            console.log(localStorage.getItem("token"))
+            
               M.toast({html: data.error,classes:"#c62828 red darken-3"})
            }
            else{
+            
+            
                M.toast({html:"Created post Successfully",classes:"#43a047 green darken-1"})
-               navigate('/')
+               navigate('/profile')
            }
         }).catch(err=>{
             console.log(err)

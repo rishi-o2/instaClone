@@ -24,9 +24,10 @@ router.post('/signin',(req,res)=>{
                 // console.log(saveduser)
                 //res.status(200).json({message:"Successfull signin"})
                 const token = jwt.sign({_id:saveduser._id},JWT_SECRET)
-                console.log(token)
+                //console.log(token)
                 const{_id,name,email}=saveduser
                 res.json({token,user:{_id,name,email}});
+                //localStorage.setItem(token,"token")
             }
             else{
                 return res.status(422).json({error:"Invalid password"})

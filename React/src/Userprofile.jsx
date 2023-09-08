@@ -2,23 +2,32 @@ import react from "react";
 import reactdom from "react-dom";
 import { useEffect,useState,useContext } from "react";
 import {UserContext} from './App';
-
+import { Params, useParams } from "react-router-dom";
 import "./index.css"
+
  const Profile = ()=>{
+    console.log("Hello")
     const [mypics,setpics] = useState([])
     const {state, dispatch} = useContext(UserContext)
-    useEffect(()=>{
-        fetch('/mypost',{
-            headers:{
-                "Authorization" : "Bearer "+ localStorage.getItem("jwt")
-
-            }
-        }).then(res=>res.json())
-        .then(res=>{
-            console.log(res.mypost)
-            setpics(res.mypost)
+    const {id}= useParams();
+    console.log(id);
+    useEffect(() => {
+        const userId = "64e1fb3fd5f52262490d4435"; // Replace with the actual user ID
+        fetch(`/user/${id}`, {
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("jwt")
+          }
         })
-    },[])
+          .then(res => res.json())
+          .then(res => {
+            console.log(res);
+            setpics(res.mypost);
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      }, []);
+      
 
     return (
         <>

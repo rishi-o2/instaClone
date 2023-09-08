@@ -8,6 +8,7 @@ app.use(express.json());
 app.use(require("./routers/auth"))
 app.use(require("./routers/signin"))
 app.use(require("./routers/Post"))
+app.use(require("./routers/user"))
 
 
 
