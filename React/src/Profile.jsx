@@ -7,21 +7,27 @@ import "./index.css"
  const Profile = ()=>{
     const [mypics,setpics] = useState([])
     const {state, dispatch} = useContext(UserContext)
+    console.log(state)
     useEffect(()=>{
-        fetch('/mypost',{
-            headers:{
-                "Authorization" : "Bearer "+ localStorage.getItem("jwt")
-
-            }
-        }).then(res=>res.json())
-        .then(res=>{
-            console.log(res.mypost)
-            setpics(res.mypost)
+        fetch("https://instaclone-4-qwrx.onrender.com/mypost", {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("jwt"),
+          },
         })
+          .then((res) => res.json())
+          .then((res) => {
+            //console.log(res.mypost)
+            setpics(res.mypost);
+            //console.log(state)
+          });
     },[])
+    
+    //console.log(mypics)
 
     return (
+        
         <>
+        
             <div style={{maxWidth:"550px", margin:"0px auto"}}>
                 <div style={{
                     display:"flex",
@@ -37,11 +43,15 @@ import "./index.css"
                         />
                     </div>
                     <div >
+                    
                         <p >{state?state.name:"loading"}</p>
+                        <p>{state?state.email:"loading"}</p>
                         <div style={{display:"flex", justifyContent:"space-between", width:"200px"}}>
-                            <p>post</p>
-                            <p>following</p>
-                            <p>followers</p>
+                        <p>{mypics.length} post</p>
+                        
+                         {/* <p>{state ? (state.following.length) : "wait"} following</p>
+                        <p>{state ? (state.followers.length) : "wait"} followers</p>  */}
+
                         </div>
                     </div>
                 </div>
