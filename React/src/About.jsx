@@ -2,6 +2,7 @@ import react,{useState,useEffect, useContext} from "react";
 import reactdom from "react-dom";
 import {UserContext} from './App';
 import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import "./index.css";
 
@@ -9,112 +10,115 @@ import "./index.css";
   const [data,setData] =  useState([])
   const {state, dispatch} = useContext(UserContext)
   useEffect(()=>{
-    fetch('/allpost',{
-      headers:{
-        "Authorization":"Bearer "+localStorage.getItem("jwt")
-      }
-    
-    }).then(res=>res.json())
-    .then(result=>{
-      console.log(result)
-     setData(result.posts)
+    fetch("https://instaclone-4-qwrx.onrender.com/allpost", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
     })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        setData(result.posts);
+      });
   },[])
   const likePost = (id)=>{
-    fetch('/like',{
-        method:"put",
-        headers:{
-            "Content-Type":"application/json",
-            "Authorization":"Bearer "+localStorage.getItem("jwt")
-        },
-        body:JSON.stringify({
-            postId:id
-        })
-    }).then(res=>res.json())
-    .then(result=>{
-             //   console.log(result)
-      const newData = data.map(item=>{
-          if(item._id==result._id){
-              return result
-          }else{
-              return item
-          }
-      })
-      setData(newData)
-    }).catch(err=>{
-        console.log(err)
+    fetch("https://instaclone-4-qwrx.onrender.com/like", {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+      body: JSON.stringify({
+        postId: id,
+      }),
     })
+      .then((res) => res.json())
+      .then((result) => {
+        //   console.log(result)
+        const newData = data.map((item) => {
+          if (item._id == result._id) {
+            return result;
+          } else {
+            return item;
+          }
+        });
+        setData(newData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 }
 const unlikePost = (id)=>{
-  fetch('/unlike',{
-      method:"put",
-      headers:{
-          "Content-Type":"application/json",
-          "Authorization":"Bearer "+localStorage.getItem("jwt")
-      },
-      body:JSON.stringify({
-          postId:id
-      })
-  }).then(res=>res.json())
-  .then(result=>{
-    //   console.log(result)
-    const newData = data.map(item=>{
-        if(item._id==result._id){
-            return result
-        }else{
-            return item
+  fetch("https://instaclone-4-qwrx.onrender.com/unlike", {
+    method: "put",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + localStorage.getItem("jwt"),
+    },
+    body: JSON.stringify({
+      postId: id,
+    }),
+  })
+    .then((res) => res.json())
+    .then((result) => {
+      //   console.log(result)
+      const newData = data.map((item) => {
+        if (item._id == result._id) {
+          return result;
+        } else {
+          return item;
         }
+      });
+      setData(newData);
     })
-    setData(newData)
-  }).catch(err=>{
-    console.log(err)
-})
+    .catch((err) => {
+      console.log(err);
+    });
 }
 const makeComment = (text,postId)=>{
-  fetch('/comment',{
-      method:"put",
-      headers:{
-          "Content-Type":"application/json",
-          "Authorization":"Bearer "+localStorage.getItem("jwt")
-      },
-      body:JSON.stringify({
-          postId,
-          text
-      })
-  }).then(res=>res.json())
-  .then(result=>{
-      console.log(result)
-      const newData = data.map(item=>{
-        if(item._id==result._id){
-            return result
-        }else{
-            return item
-        }
-     })
-    setData(newData)
-  }).catch(err=>{
-      console.log(err)
+  fetch("https://instaclone-4-qwrx.onrender.com/comment", {
+    method: "put",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + localStorage.getItem("jwt"),
+    },
+    body: JSON.stringify({
+      postId,
+      text,
+    }),
   })
+    .then((res) => res.json())
+    .then((result) => {
+      console.log(result);
+      const newData = data.map((item) => {
+        if (item._id == result._id) {
+          return result;
+        } else {
+          return item;
+        }
+      });
+      setData(newData);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 const deletepost = (postid)=>{
   console.log(postid)
-  fetch(`/deletepost/${postid}`,
-  {
-    method:"delete",
-    headers:{
-        
-        "Authorization":"Bearer "+localStorage.getItem("jwt")
+  fetch(`https://instaclone-4-qwrx.onrender.com/deletepost/${postid}`, {
+    method: "delete",
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("jwt"),
     },
-
-    }
-  ).then(res=>res.json())
-  .then(result=>{
-    console.log(result)
-    const newData = data.filter(item=>{
-      return item._id !== result._id
-    })
-    setData(newData)
   })
+    .then((res) => res.json())
+    .then((result) => {
+      console.log(result);
+      const newData = data.filter((item) => {
+        return item._id !== result._id;
+      });
+      setData(newData);
+    });
 }
 
     return (
@@ -127,7 +131,7 @@ const deletepost = (postid)=>{
                   <div className="row">
     <div className="col s12 m7">
       <div className="card">
-      <h6 style={{textAlign:"center"}}>{item.PostedBy.name}</h6>
+      <h6 style={{textAlign:"center"}}><Link to={item.PostedBy._id!=state._id?"/profile/"+item.PostedBy._id:"/profile"}>{item.PostedBy.name}</Link></h6>
       <h5 style={{padding:"5px"}}>{item.PostedBy._id == state._id 
       && <i className="material-icons" style={{
           float:"right"
