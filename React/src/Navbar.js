@@ -14,7 +14,9 @@ import "./index.css"
       return [
         <li><NavLink to="/profile">Profile</NavLink></li>,
         <li><NavLink to="/createpost">Post</NavLink></li>,
+        <li><NavLink to="/myfollowers">My Followers</NavLink></li>,
         <li>
+        
           <button className=" logbtn waves-effect waves-light #f44336 red" onClick={()=>
           {
             localStorage.clear();
