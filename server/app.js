@@ -28,6 +28,9 @@ app.get('/about',middleware, (req,res)=>{
     res.send("Hello About")
     console.log("Hello")
 })
+app.get('/message',(req,res)=>{
+    res.send("Successfull")
+})
 
 app.listen(PORT, ()=>{
     console.log("server is running on PORT", PORT);
