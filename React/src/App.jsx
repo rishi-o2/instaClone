@@ -9,6 +9,7 @@ import Navbar from "./Navbar"
 import { createContext,useContext,useEffect,Switch,useReducer } from "react";
 import Userprofile from "./Userprofile";
 import {useDispatch} from "react-redux";
+import myfollowers from "./myfollowers";
 
 
 
@@ -40,6 +41,8 @@ const Routing = ()=>{
           <Route exact path="/login"    Component = {Login}></Route>
           <Route exact path="/createpost"    Component = {Post}></Route>
           <Route exact path = "/Profile/:id" Component={Userprofile}></Route>
+          <Route exact path = "/myfollowers" Component={myfollowers}></Route>
+
      </Routes>
      
 )
