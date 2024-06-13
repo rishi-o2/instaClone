@@ -16,33 +16,33 @@ import {UserContext} from './App';
         if(!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
             M.toast({html: "invalid email",classes:"#c62828 red darken-3"})
             return}
-        fetch("/signin",{
-            method:"post",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify({
-            
+        fetch("https://instaclone-4-qwrx.onrender.com/signin", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
             email,
-            password
-            })
-    }).then(res=>res.json())
-    .then(data=>{
-        if(data.error){
-        M.toast({html:data.error,classes:"#e53935 red darken-1"})
-        }
-        else{
-            //console.log(data);
-            localStorage.setItem("jwt",data.token)
-            localStorage.setItem("user",JSON.stringify(data.user))
-            dispatch({type:"USER",payload:data.user})
-            //console.log(localStorage.getItem("jwt"))
-            M.toast({html:"successfull login",classes:"#4caf50 green"})
-            navigate("/Profile")
-        }
-    }).catch(e=>{
-        console.log(e)
-    })
+            password,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.error) {
+              M.toast({ html: data.error, classes: "#e53935 red darken-1" });
+            } else {
+              //console.log(data);
+              localStorage.setItem("jwt", data.token);
+              localStorage.setItem("user", JSON.stringify(data.user));
+              dispatch({ type: "USER", payload: data.user });
+              //console.log(localStorage.getItem("jwt"))
+              M.toast({ html: "successfull login", classes: "#4caf50 green" });
+              navigate("/Profile");
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+          });
     }
 
 
