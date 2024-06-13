@@ -1,3 +1,8 @@
 const mongoose= require("mongoose");
-mongoose.connect("mongodb://127.0.0.1:27017/rishi-api", {useNewUrlParser:true, useUnifiedTopology:true}).then( ()=> console.log("connection successfull....."))
-.catch((err) => console.log(err));
+mongoose
+  .connect(
+    "mongodb+srv://rishiind94:giPa4bW8aSJFhvQ2@cluster0.vzbfqig.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+    { useNewUrlParser: true, useUnifiedTopology: true }
+  )
+  .then(() => console.log("connection successfull....."))
+  .catch((err) => console.log(err));
