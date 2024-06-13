@@ -14,31 +14,30 @@ import { useNavigate } from 'react-router-dom';
         if(!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
             M.toast({html: "invalid email",classes:"#c62828 red darken-3"})
             return}
-        fetch("/signup",{
-            method:"post",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify({
+        fetch("https://instaclone-4-qwrx.onrender.com/signup", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
             name,
             email,
-            password
-            
-            })
-            
-    }).then(res=>res.json())
-    .then(data=>{
-        if(data.error){
-        M.toast({html:data.error,classes:"#e53935 red darken-1"})
-        }
-        else{
-            console.log(data)
-            M.toast({html:data.message,classes:"#4caf50 green"})
-            navigate("/login")
-        }
-    }).catch(e=>{
-        console.log(e)
-    })
+            password,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.error) {
+              M.toast({ html: data.error, classes: "#e53935 red darken-1" });
+            } else {
+              console.log(data);
+              M.toast({ html: data.message, classes: "#4caf50 green" });
+              navigate("/login");
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+          });
     }
     return (
         <>
