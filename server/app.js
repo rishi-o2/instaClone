@@ -11,7 +11,9 @@ app.use(require("./routers/Post"))
 app.use(require("./routers/user"))
 
 
+var cors = require("cors");
 
+app.use(cors());
 const middleware= (req,res,next)=>{
     console.log("Middleware active")
     next()
