@@ -9,7 +9,7 @@ require("./models/Post");
 
 // Configure CORS to allow requests from specific origin
 app.use(cors({
-    origin: 'https://new-insta-oq6x.vercel.app/', // Replace with your frontend URL
+    origin: 'https://new-insta-oq6x.vercel.app', // Replace with your frontend URL
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
